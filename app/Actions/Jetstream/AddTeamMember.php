@@ -22,7 +22,7 @@ class AddTeamMember implements AddsTeamMembers
     {
         Gate::forUser($user)->authorize('addTeamMember', $team);
 
-        $this->validate($team, $email, $role);
+        /*  $this->validate($team, $email, $role); */
 
         $newTeamMember = Jetstream::findUserByEmailOrFail($email);
 
@@ -46,8 +46,8 @@ class AddTeamMember implements AddsTeamMembers
         ], $this->rules(), [
             'email.exists' => __('We were unable to find a registered user with this email address.'),
         ])->after(
-            $this->ensureUserIsNotAlreadyOnTeam($team, $email)
-        )->validateWithBag('addTeamMember');
+                $this->ensureUserIsNotAlreadyOnTeam($team, $email)
+            )->validateWithBag('addTeamMember');
     }
 
     /**
@@ -60,8 +60,8 @@ class AddTeamMember implements AddsTeamMembers
         return array_filter([
             'email' => ['required', 'email', 'exists:users'],
             'role' => Jetstream::hasRoles()
-                            ? ['required', 'string', new Role]
-                            : null,
+                ? ['required', 'string', new Role]
+                : null,
         ]);
     }
 
