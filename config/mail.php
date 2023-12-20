@@ -84,6 +84,9 @@ return [
             'mailers' => [
                 'smtp',
                 'log',
+                'mailtrap' => [
+                    'transport' => 'mailtrap'
+                ],
             ],
         ],
     ],
